@@ -1,18 +1,16 @@
 {
   "manifest_version": 3,
   "name": "URL Notes (Side Panel)",
-  "version": "0.4.4",
+  "version": "0.5.0",
+  "description": "URL単位でメモを自動保存・検索・エクスポート/インポート",
   "permissions": ["storage", "tabs", "sidePanel"],
   "action": { "default_title": "URL Notes" },
   "side_panel": { "default_path": "sidepanel.html" },
   "background": { "service_worker": "background.js" },
   "commands": {
     "_execute_action": {
-      "suggested_key": {
-        "default": "Ctrl+Shift+L",
-        "mac": "Command+Shift+L"
-      },
-      "description": "Toggle side panel (same as clicking the icon)"
+      "suggested_key": { "default": "Ctrl+Shift+L", "mac": "Command+Shift+L" },
+      "description": "Toggle side panel (like clicking the icon)"
     }
   }
 }
