@@ -63,7 +63,7 @@
         cursor: pointer;
         font-weight: 600;
       }
-      .tabbtn[aria-selected="true"] {
+      .tabbtn[aria-selected='true'] {
         border-bottom: 2px solid #000;
       }
 
@@ -71,7 +71,7 @@
         display: none;
         height: 100%;
       }
-      .view[data-active="true"] {
+      .view[data-active='true'] {
         display: block;
       }
 
@@ -139,7 +139,7 @@
       }
       .item .meta {
         font-size: 11px;
-        color: var(--muted);
+        color: #666;
       }
       .item .excerpt {
         font-size: 12px;
@@ -166,7 +166,7 @@
         border-radius: 6px;
         cursor: pointer;
       }
-      input[type="file"] {
+      input[type='file'] {
         display: none;
       }
     </style>
@@ -186,37 +186,20 @@
     </header>
 
     <div class="tabs" role="tablist">
-      <button id="tab-edit" class="tabbtn" role="tab" aria-selected="true">
-        編集
-      </button>
-      <button id="tab-list" class="tabbtn" role="tab" aria-selected="false">
-        検索 / 最近
-      </button>
+      <button id="tab-edit" class="tabbtn" role="tab" aria-selected="true">編集</button>
+      <button id="tab-list" class="tabbtn" role="tab" aria-selected="false">検索 / 最近</button>
     </div>
 
-    <!-- 編集ビュー -->
     <section id="view-edit" class="view" data-active="true" role="tabpanel">
-      <textarea
-        id="editor"
-        placeholder="このURLに紐づくメモを書いてください"
-      ></textarea>
+      <textarea id="editor" placeholder="このURLに紐づくメモを書いてください"></textarea>
     </section>
 
-    <!-- 検索/最近ビュー -->
     <section id="view-list" class="view" role="tabpanel">
       <div class="toolbar">
-        <input
-          id="searchInput"
-          type="search"
-          placeholder="キーワード / URL / タイトル で検索"
-        />
+        <input id="searchInput" type="search" placeholder="キーワード / URL / タイトル で検索" />
         <button id="clearBtn" class="btn">クリア</button>
-        <button id="exportBtn" class="btn" title="JSONへ書き出し">
-          Export
-        </button>
-        <label class="btn" for="importFile" title="JSONから読み込み"
-          >Import</label
-        >
+        <button id="exportBtn" class="btn" title="JSONへ書き出し">Export</button>
+        <label class="btn" for="importFile" title="JSONから読み込み">Import</label>
         <input id="importFile" type="file" accept="application/json" />
       </div>
       <div id="listContainer" class="list" aria-live="polite"></div>

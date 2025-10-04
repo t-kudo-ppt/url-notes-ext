@@ -1,27 +1,28 @@
 {
   "name": "url-notes-ext",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "private": true,
   "type": "module",
   "scripts": {
-    "lint": "eslint \"src/**/*.{ts,tsx}\"",
-    "lint:fix": "eslint \"src/**/*.{ts,tsx}\" --fix",
-    "format": "prettier --write \"{src,public,scripts}/**/*.{ts,tsx,js,json,html,css,md}\"",
-    "format:check": "prettier --check \"{src,public,scripts}/**/*.{ts,tsx,js,json,html,css,md}\"",
     "build:sidepanel": "esbuild src/sidepanel/sidepanel.ts --bundle --outfile=dist/sidepanel.js --platform=browser --format=iife --sourcemap",
     "build:bg": "esbuild src/background/background.ts --bundle --outfile=dist/background.js --platform=browser --format=iife --sourcemap",
     "build:static": "node scripts/copy-static.mjs",
-    "build": "rimraf dist && npm run build:sidepanel && npm run build:bg && npm run build:static"
+    "build": "rimraf dist && npm run build:sidepanel && npm run build:bg && npm run build:static",
+
+    "lint": "eslint \"src/**/*.{ts,tsx}\"",
+    "lint:fix": "eslint \"src/**/*.{ts,tsx}\" --fix",
+    "format": "prettier --write \"{src,public,scripts}/**/*.{ts,tsx,js,json,html,css,md}\"",
+    "format:check": "prettier --check \"{src,public,scripts}/**/*.{ts,tsx,js,json,html,css,md}\""
   },
   "devDependencies": {
     "@types/chrome": "^0.0.279",
-    "@typescript-eslint/eslint-plugin": "^8.45.0",
-    "@typescript-eslint/parser": "^8.45.0",
+    "@typescript-eslint/eslint-plugin": "^8.7.0",
+    "@typescript-eslint/parser": "^8.7.0",
+    "eslint": "^9.11.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-unused-imports": "^4.0.0",
     "esbuild": "^0.23.0",
-    "eslint": "^9.37.0",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-unused-imports": "^4.2.0",
-    "prettier": "^3.6.2",
+    "prettier": "^3.3.3",
     "rimraf": "^5.0.5",
     "typescript": "^5.6.2"
   }

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "URL Notes (Side Panel)",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "URL単位でメモを自動保存・検索・エクスポート/インポート",
   "permissions": ["storage", "tabs", "sidePanel"],
   "action": { "default_title": "URL Notes" },
