@@ -23,7 +23,7 @@ const viewList = document.getElementById("view-list") as HTMLElement;
 const searchInput = document.getElementById("searchInput") as HTMLInputElement;
 const clearBtn = document.getElementById("clearBtn") as HTMLButtonElement;
 const listContainer = document.getElementById(
-  "listContainer"
+  "listContainer",
 ) as HTMLDivElement;
 const exportBtn = document.getElementById("exportBtn") as HTMLButtonElement;
 const importFile = document.getElementById("importFile") as HTMLInputElement;
@@ -85,7 +85,7 @@ const persist = debounce(async () => {
     if (existed) {
       await deleteNote(currentScope, currentKey);
       allNotesCache = allNotesCache.filter(
-        (n) => !(n.scope === currentScope && n.key === currentKey)
+        (n) => !(n.scope === currentScope && n.key === currentKey),
       );
       await refreshList(searchInput?.value?.trim() ?? "");
       setStatus("Cleared");
@@ -105,7 +105,7 @@ const persist = debounce(async () => {
   };
   await setNote(note);
   const idx = allNotesCache.findIndex(
-    (n) => n.scope === currentScope && n.key === currentKey
+    (n) => n.scope === currentScope && n.key === currentKey,
   );
   if (idx >= 0) allNotesCache[idx] = note;
   else allNotesCache.push(note);
@@ -192,7 +192,7 @@ listContainer.addEventListener("click", async (ev) => {
     if (scope && key && confirm("このメモを削除しますか？")) {
       await deleteNote(scope, key);
       allNotesCache = allNotesCache.filter(
-        (n) => !(n.scope === scope && n.key === key)
+        (n) => !(n.scope === scope && n.key === key),
       );
       await refreshList(searchInput.value.trim());
     }
@@ -261,7 +261,7 @@ async function handleImport(file: File) {
   }
   if (
     !confirm(
-      `${bundle.notes.length} 件のメモをインポートします。既存とキー衝突時は上書きします。よろしいですか？`
+      `${bundle.notes.length} 件のメモをインポートします。既存とキー衝突時は上書きします。よろしいですか？`,
     )
   )
     return;

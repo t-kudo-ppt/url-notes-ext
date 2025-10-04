@@ -8,7 +8,7 @@ export type Scope = "exact" | "path" | "origin";
  */
 export function buildKey(
   urlStr: string,
-  scope: Scope
+  scope: Scope,
 ): { key: string; sample: string } {
   try {
     const u = new URL(urlStr);

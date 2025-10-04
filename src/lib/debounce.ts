@@ -5,7 +5,7 @@
  */
 export function debounce<T extends (...args: any[]) => void>(
   fn: T,
-  wait = 500
+  wait = 500,
 ) {
   let t: number | undefined;
   return (...args: Parameters<T>) => {
