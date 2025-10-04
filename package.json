@@ -1,0 +1,20 @@
+{
+  "name": "url-notes-ext",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:sidepanel": "esbuild src/sidepanel/sidepanel.ts --bundle --outfile=dist/sidepanel.js --platform=browser --format=iife --sourcemap",
+    "build:bg": "esbuild src/background/background.ts --bundle --outfile=dist/background.js --platform=browser --format=iife --sourcemap",
+    "build:static": "node scripts/copy-static.mjs",
+    "build": "npm run clean && npm run build:sidepanel && npm run build:bg && npm run build:static",
+    "dev": "npm run build && esbuild src/sidepanel/sidepanel.ts --bundle --outfile=dist/sidepanel.js --platform=browser --format=iife --sourcemap --watch",
+    "clean": "rimraf dist"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.279",
+    "esbuild": "^0.23.0",
+    "rimraf": "^5.0.5",
+    "typescript": "^5.6.2"
+  }
+}

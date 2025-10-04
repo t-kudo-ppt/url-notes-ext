@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>URL Notes</title>
+    <link rel="stylesheet" href="sidepanel.css" />
+    <style>
+      :root {
+        --pad: 10px;
+        --border: #ddd;
+        --muted: #666;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: system-ui, sans-serif;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+      header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 10px;
+        border-bottom: 1px solid var(--border);
+      }
+      header .title {
+        font-weight: 600;
+        font-size: 14px;
+        flex: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      #status {
+        font-size: 12px;
+        opacity: 0.7;
+      }
+      .scopeBox {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12px;
+      }
+      select#scopeSelect {
+        font-size: 12px;
+        padding: 2px 6px;
+      }
+
+      .tabs {
+        display: flex;
+        border-bottom: 1px solid var(--border);
+      }
+      .tabbtn {
+        flex: 1;
+        padding: 8px;
+        border: 0;
+        background: #fff;
+        cursor: pointer;
+        font-weight: 600;
+      }
+      .tabbtn[aria-selected="true"] {
+        border-bottom: 2px solid #000;
+      }
+
+      .view {
+        display: none;
+        height: 100%;
+      }
+      .view[data-active="true"] {
+        display: block;
+      }
+
+      textarea {
+        width: 100%;
+        height: calc(100vh - 50px - 41px);
+        padding: var(--pad);
+        border: none;
+        outline: none;
+        resize: none;
+        font: 13px/1.5 ui-monospace, Menlo, Consolas, monospace;
+      }
+
+      .toolbar {
+        display: flex;
+        gap: 8px;
+        padding: 8px 10px;
+        border-bottom: 1px solid var(--border);
+        align-items: center;
+      }
+      #searchInput {
+        flex: 1;
+        padding: 6px 8px;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        font-size: 13px;
+      }
+      .btn {
+        font-size: 12px;
+        border: 0;
+        background: #f3f3f3;
+        padding: 6px 10px;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+
+      .list {
+        overflow: auto;
+        height: calc(100vh - 50px - 41px - 49px);
+      }
+      .item {
+        padding: 10px;
+        border-bottom: 1px solid var(--border);
+        cursor: pointer;
+      }
+      .item:hover {
+        background: #fafafa;
+      }
+      .item .line1 {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .item .title {
+        font-weight: 600;
+        font-size: 13px;
+        flex: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .item .meta {
+        font-size: 11px;
+        color: var(--muted);
+      }
+      .item .excerpt {
+        font-size: 12px;
+        color: #333;
+        margin-top: 4px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .pill {
+        font-size: 10px;
+        padding: 2px 6px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        color: #444;
+        background: #fff;
+      }
+      .delbtn {
+        font-size: 11px;
+        border: 0;
+        background: #ffecec;
+        color: #a00;
+        padding: 4px 6px;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+      input[type="file"] {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="title" id="pageTitle">Loading…</div>
+      <div class="scopeBox">
+        <label for="scopeSelect">Scope</label>
+        <select id="scopeSelect" aria-label="Scope">
+          <option value="exact">Exact</option>
+          <option value="path" selected>Path</option>
+          <option value="origin">Origin</option>
+        </select>
+      </div>
+      <div id="status">–</div>
+    </header>
+
+    <div class="tabs" role="tablist">
+      <button id="tab-edit" class="tabbtn" role="tab" aria-selected="true">
+        編集
+      </button>
+      <button id="tab-list" class="tabbtn" role="tab" aria-selected="false">
+        検索 / 最近
+      </button>
+    </div>
+
+    <!-- 編集ビュー -->
+    <section id="view-edit" class="view" data-active="true" role="tabpanel">
+      <textarea
+        id="editor"
+        placeholder="このURLに紐づくメモを書いてください"
+      ></textarea>
+    </section>
+
+    <!-- 検索/最近ビュー -->
+    <section id="view-list" class="view" role="tabpanel">
+      <div class="toolbar">
+        <input
+          id="searchInput"
+          type="search"
+          placeholder="キーワード / URL / タイトル で検索"
+        />
+        <button id="clearBtn" class="btn">クリア</button>
+        <button id="exportBtn" class="btn" title="JSONへ書き出し">
+          Export
+        </button>
+        <label class="btn" for="importFile" title="JSONから読み込み"
+          >Import</label
+        >
+        <input id="importFile" type="file" accept="application/json" />
+      </div>
+      <div id="listContainer" class="list" aria-live="polite"></div>
+    </section>
+
+    <script src="sidepanel.js"></script>
+  </body>
+</html>
